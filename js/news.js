@@ -1,4 +1,4 @@
-const loadCategory = async () => {
+const loadNews = async () => {
 
     try {
       const res = await fetch(`https://openapi.programming-hero.com/api/news/categories`);
@@ -14,7 +14,7 @@ const loadCategory = async () => {
   }
   
   const allCategory = async () => {
-    const data = await loadCategory();
+    const data = await loadNews();
   
     const category = document.getElementById("categorey");
   
@@ -33,7 +33,7 @@ const loadCategory = async () => {
   
   const newsDetails = async (category_id) => {
     const url = (` https://openapi.programming-hero.com/api/news/category/0${category_id}`);
-    // toggleSpiner(true);
+    toggleSpiner(true);
     const res = await fetch(url);
     const data = await res.json();
     displayNews(data.data);
@@ -49,9 +49,8 @@ const loadCategory = async () => {
     allNews.forEach(news => {
         console.log(news)
       const notFound = document.getElementById("not-found");
-      notFound.innerText = `${Object.keys(allNews).length} items found for category ${news.category_name}`;
-    //   console.log(notFound);
-      const { rating, total_view, title, author, thumbnail_url, image_url, details, _id } = news
+      notFound.innerText = `${Object.keys(allNews).length} items found for category`;
+      const { total_view, title, author, thumbnail_url, details, _id } = news
       const div = document.createElement("div");
       div.innerHTML = ` <div class=" ca px-40 py-5 card card-side bg-base-100 shadow-xl">
         <figure><img class="w-80 h-80" src="${thumbnail_url}" alt="Movie"></figure>
@@ -87,7 +86,7 @@ const loadCategory = async () => {
       newsContainer.appendChild(div);
     });
   
-    // toggleSpiner(false);
+    toggleSpiner(false);
   }
   
   
@@ -126,3 +125,14 @@ const loadCategory = async () => {
   
   
   }
+  const toggleSpiner = isLoading => {
+    const loadSection = document.getElementById("loader");
+    if (isLoading) {
+      loadSection.classList.remove('invisible')
+    }
+    else {
+      loadSection.classList.add('invisible')
+  
+    }
+  }
+  
